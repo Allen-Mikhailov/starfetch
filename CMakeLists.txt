@@ -4,3 +4,7 @@ project(starfetch)
 
 add_executable(starfetch starfetch.c)
 
+# Link the math library
+target_link_libraries(starfetch m)
+
+
