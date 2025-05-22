@@ -87,7 +87,16 @@ void ellipseIntersection(Ellipse *ellipseS, PVLine *raw_line, QResult *result)
 	float b = 2*line.vx*line.px * ea2 + 2*line.vy*line.py*eb2;
 	float c = line.px*line.px*ea2 + line.py*line.py*eb2 - 1;
 
-	solveQuadratic(a, b, c, result);	
+	solveQuadratic(a, b, c, result);
+}
+
+v2 getPointOnEllipse(Ellipse *ellipse, float t)
+{
+	v2 p = {cos(t) * ellipse->a, sin(t) * ellipse->b};
+	rotateVector2(&p, ellipse->theta);
+	p.x += ellipse->x;
+	p.y += ellipse->y;
+	return p;
 }
 
 #endif

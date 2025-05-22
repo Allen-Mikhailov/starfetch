@@ -1,7 +1,11 @@
 #ifndef ASCII_H
 #define ASCII_H
 
+#include <stdlib.h>
+#include <math.h>
 #include "ellipse.h"
+
+#define PI 3.14159265358979323846
 
 typedef struct AsciiBufferS {
 	char* buffer;
@@ -12,8 +16,8 @@ typedef struct AsciiBufferS {
 
 AsciiBuffer *createAsciiBuffer(int width, int height)
 {
-	AsciiBuffer *structure = malloc(sizeof(AsciiBuffer));
-	char* buffer = malloc(sizeof(char) * width * height);
+	AsciiBuffer *structure = (AsciiBuffer*) malloc(sizeof(AsciiBuffer));
+	char* buffer = (char*) malloc(sizeof(char) * width * height);
 	structure->buffer = buffer;
 	structure->width = width;
 	structure->height = height;
@@ -23,7 +27,7 @@ AsciiBuffer *createAsciiBuffer(int width, int height)
 
 void clearAsciiBuffer(AsciiBuffer *buffer)
 {
-	for (int i = 0; i < buffer->width * buffer->height)
+	for (int i = 0; i < buffer->width * buffer->height; i++)
 		buffer->buffer[i] = ' ';
 }
 
@@ -37,11 +41,11 @@ void drawEllipseAttemp1(AsciiBuffer *buffer, Ellipse* ellipse)
 {
 	// Calculating the intersection points on all the vertical and 
 	// horizontal lines that make up the grid
-	float *hIntersects = malloc(sizeof(float) * ( buffer->width + 1 ) *2);
-	float *hIntersectsCount = malloc(sizeof(char) * (buffer->width + 1));
+	float *hIntersects = (float*) malloc(sizeof(float) * ( buffer->width + 1 ) *2);
+	float *hIntersectsCount = (float*) malloc(sizeof(char) * (buffer->width + 1));
 
-	float *vIntersects = malloc(sizeof(float) * ( buffer->height + 1 )*2);
-	float *vIntersectsCount = malloc(sizeof(char) * (buffer->height + 1));
+	float *vIntersects = (float*) malloc(sizeof(float) * ( buffer->height + 1 )*2);
+	float *vIntersectsCount = (float*) malloc(sizeof(char) * (buffer->height + 1));
 
 	PVLine line;
 	QResult q_result;
@@ -95,18 +99,66 @@ float pointD2(v2 *p1, v2 *p2)
 		+  (p1->y - p2->y) * (p1->y - p2->y);
 }
 
-float closestPointToEllipse(v2 raw_point, Ellipse *ellipse, float tol)
+float distanceDerivative(Ellipse *ellipse, float t)
 {
+	return 2 * (ellipse->a * cos(t) - ellipse->x) * (-ellipse->a * sin(t)) 
+	     + 2 * (ellipse->b * sin(t) - ellipse->y) * ( ellipse->b * cos(t));
+}
+
+float closestPointToEllipse(v2 point, Ellipse *ellipse, float tol)
+{
+	float tol2 = tol*tol;
+
+	// Rotating point to match ellipse rotation
+	v2 r_point = {point.x-ellipse->x, point.y-ellipse->y};
+	rotateVector2(&r_point, -ellipse->theta);
+
+	bool above_ellipse   = r_point.y > ellipse->y;
+	bool rightof_ellipse = r_point.x > ellipse->x;
+
 	float t1;
 	float t2;
 	float t3;
 
-	v2 p1;
-	v2 p2;
-	v2 p3;
-	v2 *temp;
+	float d1;
+	float d2;
+	float d3;
 
-	while ()
+	// Picking the starting quadrant
+	if (above_ellipse)
+	{
+		if (rightof_ellipse)
+		{
+			// First Quadrant
+			t1 = PI * 0;
+			t2 = PI * 0.5;
+		} else {
+			// Second Quadrant
+			t1 = PI * 0.5;
+			t2 = PI * 1;
+		}
+	} else {
+		if (!rightof_ellipse)
+		{
+			// Third Quadrant
+			t1 = PI * 1;
+			t2 = PI * 1.5;
+		} else {
+			// Fourth Quadrant
+			t1 = PI * 1.5;
+			t2 = PI * 2;
+		}
+	}
+
+	d1 = distanceDerivative(ellipse, t1);
+	d2 = distanceDerivative(ellipse, t2);
+
+	while (pointD2(&p1, &p2) > tol2)
+	{
+		t3 = (t1 + t2) * 0.5;
+		p3 = getPointOnEllipse(ellipse, t3);
+		d3 = pointD2(&point, &p3);
+	}
 }
 
 void drawEllipse(AsciiBuffer *buffer, Ellipse* ellipse)
