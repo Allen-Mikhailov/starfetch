@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include<unistd.h>
+#include "ascii.h"
 
 void sleep_ms(int milliseconds)
 {
@@ -41,6 +42,12 @@ char *scan_piped()
 	return buffer;
 }
 
+char *printAndReturnNull(char* str)
+{
+	printf("%s", str);
+	return NULL;
+}
+
 char *clean_neopixel()
 {
 	char *neofetch_string;
@@ -53,13 +60,13 @@ char *clean_neopixel()
 	char *ascii_end = strstr(ascii_start, ascii_end_str);
 
 	if (ascii_start == NULL)
-		return printf("ASCII Start is NULL\n");
+		return printAndReturnNull("ASCII Start is NULL\n");
 
 	if (ascii_end == NULL)
-		return printf("ASCII End is NULL\n");
+		return printAndReturnNull("ASCII End is NULL\n");
 
 	if (ascii_start > ascii_end)
-		return printf("Start > end for some reason\n");
+		return printAndReturnNull("Start > end for some reason\n");
 
 	ascii_start += 3;
 	ascii_end -= 2;
@@ -74,14 +81,43 @@ char *clean_neopixel()
 }
 
 
-
 int main() {
-	
+
 	char *neofetch_string = clean_neopixel();
+	
+	
+	printf("\n");
 
 	printf("%s\n", neofetch_string);
 
-	
+
+	AsciiBuffer *buffer = createAsciiBuffer(42, 21);
+
+	Ellipse ellipse;
+	ellipse.x = 20;
+	ellipse.y = 10;
+	ellipse.a = 9; 
+	ellipse.b = 5;
+	ellipse.theta = 0.63;
+
+	while (1)
+	{
+
+		printf("\033[H");	
+
+		clearAsciiBuffer(buffer);
+		drawEllipseAttempt3(buffer, &ellipse, 1000);
+
+		ellipse.theta += 0.05;
+		
+		printAsciiBuffer(buffer);
+		
+		sleep_ms(50);
+	}
+
+
+
+
 
 	return 0;
 }
