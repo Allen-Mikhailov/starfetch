@@ -10,7 +10,11 @@
 
 #define PI 3.14159265358979323846
 
-char ASCII_GRADIENT[] = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
+//char ASCII_GRADIENT[] = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. ";
+
+const char ASCII_GRADIENT[] = " .:-=+*#%@";
+const int  ASCII_GRADIENT_COUNT = sizeof(ASCII_GRADIENT) -1;
+#define ASCII_GRADINET_INVERTED
 
 typedef struct AsciiBufferS {
 	char* buffer;
@@ -50,7 +54,11 @@ char rangeToChar(float val, float min, float max)
 
 	// printf("a: %f\n", a);
 
-	return ASCII_GRADIENT[(int) (a*70)];
+#ifdef ASCII_GRADINET_INVERTED
+	return ASCII_GRADIENT[(int) ((1-a)*ASCII_GRADIENT_COUNT)];
+#elif 
+	return ASCII_GRADIENT[(int) (a*ASCII_GRADIENT_COUNT)];
+#endif
 }
 
 
@@ -249,8 +257,8 @@ void drawEllipse(AsciiBuffer *buffer, Ellipse* ellipse, float width)
 	}
 }
 
-const char *ANGLE_ASCII = "|/--\\|";
-const int ANGLE_ASCII_COUNT = 6;
+const char *ANGLE_ASCII = "|/'--'\\|";
+const int ANGLE_ASCII_COUNT = 8;
 
 void drawEllipseAttempt3(AsciiBuffer *buffer, Ellipse* ellipse, int res)
 {

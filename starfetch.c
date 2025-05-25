@@ -95,22 +95,50 @@ int main() {
 
 	Ellipse ellipse;
 	ellipse.x = 20;
-	ellipse.y = 10;
-	ellipse.a = 9; 
-	ellipse.b = 5;
-	ellipse.theta = 0.63;
+	ellipse.y = 20;
+	ellipse.a = 10; 
+	ellipse.b = 10;
+	ellipse.theta = -0.63;
+
+	Ellipse ellipse2;
+	ellipse2.x = 20;
+	ellipse2.y = 20;
+	ellipse2.a = 4; 
+	ellipse2.b = 2;
+	ellipse2.theta = -0.63;
+
+	Ellipse ellipse3;
+	ellipse3.x = 20;
+	ellipse3.y = 20;
+	ellipse3.a = 20; 
+	ellipse3.b = 20;
+	ellipse3.theta = -0.63;
+
+
+	int frame = 0;
+
 
 	while (1)
 	{
+		// Adjusting State
+		ellipse2.theta = 0.63 + 0.3 * sin(frame * 0.02);
 
+
+		// Drawing
 		printf("\033[H");	
 
 		clearAsciiBuffer(buffer);
-		drawEllipseAttempt3(buffer, &ellipse, 1000);
 
-		ellipse.theta += 0.05;
+		ellipse.theta = 0.63;
+		drawEllipse(buffer, &ellipse, 2);
+
+
+		drawEllipse(buffer, &ellipse2, 1);
+
 		
 		printAsciiBuffer(buffer);
+
+		frame++;
 		
 		sleep_ms(50);
 	}
