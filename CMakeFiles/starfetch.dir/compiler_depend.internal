@@ -4,7 +4,9 @@
 CMakeFiles/starfetch.dir/starfetch.c.o
  /home/allenm/Code/Projects/starfetch/starfetch.c
  /home/allenm/Code/Projects/starfetch/ascii.h
+ /home/allenm/Code/Projects/starfetch/ascii_lights.h
  /home/allenm/Code/Projects/starfetch/ellipse.h
+ /home/allenm/Code/Projects/starfetch/vector.h
  /usr/include/alloca.h
  /usr/include/endian.h
  /usr/include/features-time64.h

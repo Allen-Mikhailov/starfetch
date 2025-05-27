@@ -3,6 +3,7 @@
 #include <string.h>
 #include<unistd.h>
 #include "ascii.h"
+#include "ascii_lights.h"
 
 void sleep_ms(int milliseconds)
 {
@@ -80,6 +81,8 @@ char *clean_neopixel()
 	return neofetch_string;
 }
 
+C3 ambient_light = {35, 38, 39};
+
 
 int main() {
 
@@ -92,6 +95,7 @@ int main() {
 
 
 	AsciiBuffer *buffer = createAsciiBuffer(42, 21);
+	ALBuffer *light_buffer = attachALBuffer(buffer);
 
 	Ellipse ellipse;
 	ellipse.x = 20;
@@ -114,20 +118,28 @@ int main() {
 	ellipse3.b = 20;
 	ellipse3.theta = -0.63;
 
+	APLight ap_light;
+	ap_light.point.x = 20;
+	ap_light.point.y = 10;
+	ap_light.color.r = 253;
+	ap_light.color.g = 200;
+	ap_light.color.b = 68;
+	ap_light.strength = 20;
+
 
 	int frame = 0;
-
 
 	while (1)
 	{
 		// Adjusting State
-		ellipse2.theta = 0.63 + 0.3 * sin(frame * 0.02);
+		ellipse2.theta = 0.63 + 0.5 * sin(frame * 0.02);
 
 
 		// Drawing
 		printf("\033[H");	
 
 		clearAsciiBuffer(buffer);
+		clearLights(light_buffer);
 
 		ellipse.theta = 0.63;
 		drawEllipse(buffer, &ellipse, 2);
@@ -135,8 +147,13 @@ int main() {
 
 		drawEllipse(buffer, &ellipse2, 1);
 
+		ap_light.point.y = 10 + 4 * sin(frame * 0.1);
+
+		applyAmbientLight(light_buffer, &ambient_light);
+		applyPointLight(light_buffer, &ap_light);
+
 		
-		printAsciiBuffer(buffer);
+		printColoredBuffer(light_buffer);
 
 		frame++;
 		

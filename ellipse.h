@@ -2,6 +2,7 @@
 #define ELLIPSE_H
 
 #include <math.h>
+#include "vector.h"
 
 typedef struct EllipseStruct {
 	float x;
@@ -12,53 +13,10 @@ typedef struct EllipseStruct {
 } Ellipse;
 
 
-typedef struct QuadraticResult {
-	char count;
-	float v1;
-	float v2;
-} QResult;
-
-// Point Vector Line
-// Vector does not have to be normalized
-typedef struct PointVectorLine {
-	float px;
-	float py;
-	float vx;
-	float vy;
-} PVLine;
-
-void solveQuadratic(float a, float b, float c, QResult *result)
-{
-	float d = b*b - 4 * a * c;
-	if (d > 0) {
-		result->count = 2;
-		result->v1 = (-b + sqrt(d)) / (2*a);
-		result->v2 = (-b - sqrt(d)) / (2*a);
-	} else if (d == 0) {
-		result->count = 1;
-		result->v1 = (-b) / (2*a);
-	} else {
-		result->count = 0;
-	}
-}
-
-typedef struct Vector2 {
-	float x;
-	float y;
-} v2;
-
 typedef struct Vector2Ellipse {
 	float x;
 	float y;
 } v2e;
-
-void rotateVector2(v2 *v, float theta)
-{
-	float x = v->x;
-	float y = v->y;
-	v->x = x * cos(theta) - y * sin(theta);
-	v->y = x * sin(theta) + y * cos(theta);
-}
 
 void rotateVector2e(v2e *v, float theta)
 {

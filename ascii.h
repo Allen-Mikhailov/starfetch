@@ -127,11 +127,7 @@ void drawEllipseAttempt1(AsciiBuffer *buffer, Ellipse* ellipse)
 	}
 }
 
-float pointD2(v2 *p1, v2 *p2)
-{
-	return (p1->x - p2->x) * (p1->x - p2->x) 
-		+  (p1->y - p2->y) * (p1->y - p2->y);
-}
+
 
 int sameSign(float v1, float v2)
 {

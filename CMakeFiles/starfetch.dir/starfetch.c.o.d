@@ -66,4 +66,6 @@ CMakeFiles/starfetch.dir/starfetch.c.o: \
  /usr/include/x86_64-linux-gnu/bits/fp-fast.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
- /home/allenm/Code/Projects/starfetch/ellipse.h
+ /home/allenm/Code/Projects/starfetch/ellipse.h \
+ /home/allenm/Code/Projects/starfetch/vector.h \
+ /home/allenm/Code/Projects/starfetch/ascii_lights.h
