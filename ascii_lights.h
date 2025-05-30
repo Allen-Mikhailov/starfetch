@@ -105,7 +105,7 @@ void printColoredBuffer(ALBuffer *buffer)
 {
 	// size of string is 20 * character count + height (for \n) + 1 (\0)
 	int char_count = buffer->width * buffer->height;
-	int malloc_size = sizeof(char) * (COLOR_STR_SIZE +1)* char_count + buffer->height + 1;
+	int malloc_size = sizeof(char) * (COLOR_STR_SIZE +1)* char_count + buffer->height + 1 + COLOR_STR_SIZE;
 	char *str = malloc(malloc_size);
 
 	char *str_head = str;
@@ -139,6 +139,13 @@ void printColoredBuffer(ALBuffer *buffer)
 		str_head++;
 
 	}
+
+	// Writing White
+	memcpy(str_head, COLOR_STR, COLOR_STR_SIZE);
+	writeNumCharToStr(str_head+7,  255);
+	writeNumCharToStr(str_head+11, 255);
+	writeNumCharToStr(str_head+15, 255);
+	str_head += COLOR_STR_SIZE;
 
 	*str_head = '\0';
 

@@ -87,8 +87,11 @@ C3 ambient_light = {35, 38, 39};
 
 
 int main() {
+	time_t start_time = time(NULL);
+	time_t last_time = start_time;
+	int fps;
 
-	srand(time(NULL));
+	srand(start_time);
 
 	char *neofetch_string = clean_neopixel();
 	
@@ -126,12 +129,15 @@ int main() {
 
 
 	int frame = 0;
+	int fps_frame = 0;
 
 	while (1)
 	{
 		// Adjusting State
 		ellipse2.theta = 0.63 + 0.5 * sin(frame * 0.02);
 
+
+		
 
 		// Drawing
 		printf("\033[H");	
@@ -146,10 +152,10 @@ int main() {
 		ellipse.theta = 0.63;
 		drawEllipse(buffer, &ellipse, 2);
 
-
+		//ellipse.y = 20 + 1 * sin(frame * 0.02);
 		drawEllipse(buffer, &ellipse2, 1);
 
-		ap_light.point.y = 10 + 4 * sin(frame * 0.1);
+		ap_light.point.y = 10 + 4 * sin(frame * 0.03);
 
 		applyAmbientLight(light_buffer, &ambient_light);
 		applyPointLight(light_buffer, &ap_light);
@@ -158,9 +164,21 @@ int main() {
 		printColoredBuffer(light_buffer);
 
 		frame++;
+		fps_frame++;
+
+		if (time(NULL) != last_time)
+		{
+			last_time = time(NULL);
+			fps = fps_frame;
+			fps_frame = 0;	
+		}
+
+		printf("\033[H");	
+		printf("%d \n", fps );
+
 
 		
-		sleep_ms(50);
+		sleep_ms(20);
 	}
 
 

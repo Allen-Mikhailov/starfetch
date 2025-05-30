@@ -221,7 +221,7 @@ float closestPointToEllipse(v2 point, Ellipse *ellipse, float tol)
 	return t1;
 }
 
-const float ellipse_tol = 0.003;
+const float ellipse_tol = 0.03;
 void drawEllipse(AsciiBuffer *buffer, Ellipse* ellipse, float width)
 {
 	v2 p;
