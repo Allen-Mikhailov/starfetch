@@ -4,6 +4,7 @@
 CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
   ascii.h \
   ascii_lights.h \
+  ascii_rain.h \
   ellipse.h \
   vector.h \
   /usr/include/alloca.h \
@@ -16,6 +17,7 @@ CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
   /usr/include/stdlib.h \
   /usr/include/string.h \
   /usr/include/strings.h \
+  /usr/include/time.h \
   /usr/include/unistd.h \
   /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h \
   /usr/include/x86_64-linux-gnu/bits/byteswap.h \
@@ -46,6 +48,7 @@ CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
   /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
   /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h \
   /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h \
+  /usr/include/x86_64-linux-gnu/bits/time.h \
   /usr/include/x86_64-linux-gnu/bits/time64.h \
   /usr/include/x86_64-linux-gnu/bits/timesize.h \
   /usr/include/x86_64-linux-gnu/bits/types.h \
@@ -62,8 +65,10 @@ CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
   /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h \
   /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h \
+  /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
   /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
   /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
   /usr/include/x86_64-linux-gnu/bits/typesizes.h \
@@ -91,15 +96,19 @@ CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
 
-/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
-
 /usr/include/x86_64-linux-gnu/bits/typesizes.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
@@ -111,19 +120,19 @@ CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
 
 /usr/include/x86_64-linux-gnu/bits/environments.h:
 
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
+
+ascii_rain.h:
+
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
 /usr/include/string.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
-
 /usr/include/features-time64.h:
 
 ellipse.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
@@ -151,22 +160,6 @@ vector.h:
 
 starfetch.c:
 
-/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
-
-/usr/include/strings.h:
-
-/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
-
-/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
-
-/usr/include/x86_64-linux-gnu/bits/getopt_core.h:
-
-/usr/include/x86_64-linux-gnu/bits/timesize.h:
-
-/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
-
-/usr/include/unistd.h:
-
 /usr/include/alloca.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
@@ -177,13 +170,39 @@ ascii_lights.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
+/usr/include/x86_64-linux-gnu/bits/floatn-common.h:
+
+/usr/include/strings.h:
+
+/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
+
+/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
+
+/usr/include/unistd.h:
+
 /usr/include/features.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
+
+/usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
+
+/usr/include/time.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
+
+/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
+
+/usr/include/x86_64-linux-gnu/bits/types.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/stdc-predef.h:
+
+/usr/include/x86_64-linux-gnu/bits/timesize.h:
+
+/usr/include/x86_64-linux-gnu/bits/getopt_core.h:
 
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
@@ -205,17 +224,13 @@ ascii_lights.h:
 
 /usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdio_lim.h:
-
-/usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
-
-/usr/include/x86_64-linux-gnu/bits/types.h:
-
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
 /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h:
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
+
+/usr/include/x86_64-linux-gnu/bits/time.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
 

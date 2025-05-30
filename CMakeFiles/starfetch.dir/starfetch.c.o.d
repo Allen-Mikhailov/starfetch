@@ -68,4 +68,8 @@ CMakeFiles/starfetch.dir/starfetch.c.o: \
  /usr/include/x86_64-linux-gnu/bits/mathcalls.h \
  /home/allenm/Code/Projects/starfetch/ellipse.h \
  /home/allenm/Code/Projects/starfetch/vector.h \
- /home/allenm/Code/Projects/starfetch/ascii_lights.h
+ /home/allenm/Code/Projects/starfetch/ascii_lights.h \
+ /home/allenm/Code/Projects/starfetch/ascii_rain.h /usr/include/time.h \
+ /usr/include/x86_64-linux-gnu/bits/time.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h \
+ /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h

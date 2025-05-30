@@ -4,6 +4,8 @@
 #include<unistd.h>
 #include "ascii.h"
 #include "ascii_lights.h"
+#include "ascii_rain.h"
+#include <time.h>
 
 void sleep_ms(int milliseconds)
 {
@@ -86,6 +88,8 @@ C3 ambient_light = {35, 38, 39};
 
 int main() {
 
+	srand(time(NULL));
+
 	char *neofetch_string = clean_neopixel();
 	
 	
@@ -96,6 +100,7 @@ int main() {
 
 	AsciiBuffer *buffer = createAsciiBuffer(42, 21);
 	ALBuffer *light_buffer = attachALBuffer(buffer);
+	ARState *rain_state = attachARState(buffer, 50);
 
 	Ellipse ellipse;
 	ellipse.x = 20;
@@ -110,13 +115,6 @@ int main() {
 	ellipse2.a = 4; 
 	ellipse2.b = 2;
 	ellipse2.theta = -0.63;
-
-	Ellipse ellipse3;
-	ellipse3.x = 20;
-	ellipse3.y = 20;
-	ellipse3.a = 20; 
-	ellipse3.b = 20;
-	ellipse3.theta = -0.63;
 
 	APLight ap_light;
 	ap_light.point.x = 20;
@@ -141,6 +139,10 @@ int main() {
 		clearAsciiBuffer(buffer);
 		clearLights(light_buffer);
 
+		tickRain(rain_state);
+
+		drawRain(rain_state, buffer);
+
 		ellipse.theta = 0.63;
 		drawEllipse(buffer, &ellipse, 2);
 
@@ -156,6 +158,7 @@ int main() {
 		printColoredBuffer(light_buffer);
 
 		frame++;
+
 		
 		sleep_ms(50);
 	}
