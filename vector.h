@@ -1,6 +1,10 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#define MIN(a,b) (((a)<(b))?(a):(b))
+#define MAX(a,b) (((a)>(b))?(a):(b))
+
+
 typedef struct Vector2 {
 	float x;
 	float y;

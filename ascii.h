@@ -4,9 +4,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include "ellipse.h"
-
-#define MIN(a,b) (((a)<(b))?(a):(b))
-#define MAX(a,b) (((a)>(b))?(a):(b))
+#include "rect.h"
 
 #define PI 3.14159265358979323846
 
@@ -40,6 +38,14 @@ AsciiBuffer *createAsciiBuffer(int width, int height)
 	clearAsciiBuffer(structure);
 
 	return structure;
+}
+
+void getAsciiBounds(AsciiBuffer *buffer, rect *out)
+{
+	out->left = 0;
+	out->top = 0;
+	out->right = buffer->width-1;
+	out->bottom = buffer->height-1;
 }
 
 char rangeToChar(float val, float min, float max)

@@ -85,6 +85,9 @@ char *clean_neopixel()
 
 C3 ambient_light = {35, 38, 39};
 
+#define BUFFER_WIDTH 42
+#define BUFFER_HEIGHT 21
+
 
 int main() {
 	time_t start_time = time(NULL);
@@ -101,7 +104,7 @@ int main() {
 	printf("%s\n", neofetch_string);
 
 
-	AsciiBuffer *buffer = createAsciiBuffer(42, 21);
+	AsciiBuffer *buffer = createAsciiBuffer(BUFFER_WIDTH, BUFFER_HEIGHT);
 	ALBuffer *light_buffer = attachALBuffer(buffer);
 	ARState *rain_state = attachARState(buffer, 50);
 
@@ -131,16 +134,26 @@ int main() {
 	int frame = 0;
 	int fps_frame = 0;
 
+	const int fps_spacing = 4;
+
+	char *fps_str = malloc(sizeof(char) * (BUFFER_HEIGHT + 2 + fps_spacing + 1));
+	fps_str[0] = '%';
+	fps_str[1] = 'd';
+
+	for (int i = 0; i < fps_spacing; i++)
+		fps_str[i+2] = ' ';
+
+	for (int i = 0; i < BUFFER_HEIGHT; i++)
+		fps_str[i+2+fps_spacing] = ' ';
+
+	fps_str[2+fps_spacing+BUFFER_HEIGHT] = '\0';
+
 	while (1)
 	{
 		// Adjusting State
 		ellipse2.theta = 0.63 + 0.5 * sin(frame * 0.02);
 
-
-		
-
 		// Drawing
-		printf("\033[H");	
 
 		clearAsciiBuffer(buffer);
 		clearLights(light_buffer);
@@ -160,9 +173,6 @@ int main() {
 		applyAmbientLight(light_buffer, &ambient_light);
 		applyPointLight(light_buffer, &ap_light);
 
-		
-		printColoredBuffer(light_buffer);
-
 		frame++;
 		fps_frame++;
 
@@ -173,12 +183,18 @@ int main() {
 			fps_frame = 0;	
 		}
 
-		printf("\033[H");	
-		printf("%d \n", fps );
-
-
+		#define DISPLAY
+		#ifdef DISPLAY
 		
-		sleep_ms(20);
+		printf("\033[H");	
+		printColoredBuffer(light_buffer);
+
+		printf("\033[H");	
+		printf(fps_str, fps);
+
+		#endif /* ifdef DISPLAY */	
+		
+		sleep_ms(30);
 	}
 
 

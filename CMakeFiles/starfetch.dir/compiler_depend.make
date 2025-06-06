@@ -6,6 +6,7 @@ CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
   ascii_lights.h \
   ascii_rain.h \
   ellipse.h \
+  rect.h \
   vector.h \
   /usr/include/alloca.h \
   /usr/include/endian.h \
@@ -90,8 +91,6 @@ CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
 /usr/include/x86_64-linux-gnu/bits/waitflags.h:
@@ -148,11 +147,11 @@ ascii.h:
 
 /usr/include/endian.h:
 
+/usr/include/math.h:
+
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
 vector.h:
-
-/usr/include/math.h:
 
 /usr/include/x86_64-linux-gnu/bits/select.h:
 
@@ -174,17 +173,11 @@ ascii_lights.h:
 
 /usr/include/strings.h:
 
-/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
-/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
+rect.h:
 
 /usr/include/unistd.h:
-
-/usr/include/features.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/FILE.h:
 
 /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
@@ -196,9 +189,19 @@ ascii_lights.h:
 
 /usr/include/x86_64-linux-gnu/bits/types.h:
 
+/usr/include/features.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/FILE.h:
+
 /usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/stdc-predef.h:
+
+/usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
+
+/usr/include/x86_64-linux-gnu/bits/fp-logb.h:
 
 /usr/include/x86_64-linux-gnu/bits/timesize.h:
 
@@ -232,6 +235,10 @@ ascii_lights.h:
 
 /usr/include/x86_64-linux-gnu/bits/time.h:
 
+/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct_timespec.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
@@ -247,7 +254,3 @@ ascii_lights.h:
 /usr/include/x86_64-linux-gnu/bits/long-double.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/clock_t.h:

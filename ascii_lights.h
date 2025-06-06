@@ -53,14 +53,23 @@ void applyAmbientLight(ALBuffer *buffer, C3 *light)
 	
 }
 
+
+
 void applyPointLight(ALBuffer *buffer, APLight *light)
 {
-	float b = 1/ light->strength;
+	float b = 1 / light->strength;
+
+	rect ascii_bounds; 
+	getAsciiBounds(buffer->ascii_buffer, &ascii_bounds);
+
+	rect light_bounds;
+	getCircleBoundsRect(light->strength, light->point, ascii_bounds, &light_bounds);
+
 	v2 c_point; // cell point
-	for (int x = 0; x < buffer->width; x++)
+	for (int x = light_bounds.left; x < light_bounds.right+1; x++)
 	{
 		c_point.x = x + 0.5;
-		for (int y = 0; y < buffer->height; y++)
+		for (int y = light_bounds.top; y < light_bounds.bottom+1; y++)
 		{
 			c_point.y = 2*y + 1;
 			float distance = sqrt(pointD2(&c_point, &(light->point)));
