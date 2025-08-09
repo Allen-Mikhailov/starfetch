@@ -3,6 +3,8 @@
 
 #include <math.h>
 #include "vector.h"
+#include "table_sin.h"
+
 
 typedef struct EllipseStruct {
 	float x;
@@ -17,14 +19,6 @@ typedef struct Vector2Ellipse {
 	float x;
 	float y;
 } v2e;
-
-void rotateVector2e(v2e *v, float theta)
-{
-	float x = v->x;
-	float y = v->y;
-	v->x = x * cos(theta) - y * sin(theta);
-	v->y = x * sin(theta) + y * cos(theta);
-}
 
 
 // Returns the time that the line will intersect with the ellipse
@@ -60,39 +54,40 @@ void ellipseIntersection(Ellipse *ellipseS, PVLine *raw_line, QResult *result)
 	solveQuadratic(a, b, c, result);
 }
 
-v2e getRelativePointOnEllipse(Ellipse *ellipse, float t)
+static inline v2e getRelativePointOnEllipse(Ellipse *ellipse, float t)
 {
 	v2e result = {cos(t) * ellipse->a, sin(t) * ellipse->b};
 	return result;
 }
 
-v2 convertV2eToV2(Ellipse *ellipse, v2e p)
+static inline v2 *convertV2eToV2(Ellipse *ellipse, v2e *p)
 {
-	v2 p2 = {p.x, p.y};
-	rotateVector2(&p2, ellipse->theta);
-	p2.x += ellipse->x;
-	p2.y += ellipse->y;
-	return p2;
+	rotateVector2((v2*) p, ellipse->theta);
+	p->x += ellipse->x;
+	p->y += ellipse->y;
+	return (v2*) p;
 }
 
-v2e convertV2ToV2e(Ellipse *ellipse, v2 p)
+static inline v2e *convertV2ToV2e(Ellipse *ellipse, v2 *p)
 {
-	v2e p2 = {p.x, p.y};
-	p2.x -= ellipse->x;
-	p2.y -= ellipse->y;
-	rotateVector2e(&p2, -ellipse->theta);
-	return p2;
+	p->x -= ellipse->x;
+	p->y -= ellipse->y;
+	rotateVector2(p, -ellipse->theta);
+	return (v2e*) p;
 }
 
-v2 getPointOnEllipse(Ellipse *ellipse, float t)
+static inline v2 getPointOnEllipse(Ellipse *ellipse, float t)
 {
-	v2e p = {cos(t) * ellipse->a, sin(t) * ellipse->b};
-	return convertV2eToV2(ellipse, p);
+	v2 p = {cos(t) * ellipse->a, sin(t) * ellipse->b};
+	convertV2eToV2(ellipse, (v2e*) &p);
+	return p;
 }
 
-float distanceDerivative(Ellipse *ellipse, v2e *point, float t)
+static inline float distanceDerivative(Ellipse *ellipse, v2e *point, float t)
 {
-	return 2 * (ellipse->a * cos(t) - point->x) * (-ellipse->a * sin(t)) + 2 * (ellipse->b * sin(t) - point->y) * ( ellipse->b * cos(t));
+	float s = t_sin(t);
+	float c = t_cos(t);
+	return 2 * (ellipse->a * c - point->x) * (-ellipse->a * s) + 2 * (ellipse->b * s - point->y) * ( ellipse->b * c);
 }
 
 #endif

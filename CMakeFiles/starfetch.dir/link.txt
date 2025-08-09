@@ -1,1 +1,1 @@
-/usr/bin/cc CMakeFiles/starfetch.dir/starfetch.c.o -o starfetch  -lm
+/usr/bin/cc -g CMakeFiles/starfetch.dir/starfetch.c.o -o starfetch  -lm

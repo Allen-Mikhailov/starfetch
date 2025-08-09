@@ -6,6 +6,7 @@
 #include "ascii_lights.h"
 #include "ascii_rain.h"
 #include <time.h>
+#include "table_sin.h"
 
 void sleep_ms(int milliseconds)
 {
@@ -45,6 +46,33 @@ char *scan_piped()
 	return buffer;
 }
 
+#define EXPECTED_FASTFETCH_SIZE 8000
+
+char *readFastFetch()
+{
+	FILE *fp;
+	char *output = malloc(EXPECTED_FASTFETCH_SIZE);
+	char section[1035];
+
+	/* Open the command for reading. */
+	fp = popen("fastfetch", "r");
+	if (fp == NULL) {
+		printf("Failed to run command\n" );
+		exit(1);
+	}
+
+	/* Read the output a line at a time - output it. */
+	while (fgets(section, sizeof(section), fp) != NULL) {
+		// printf("%s", section);
+		strcat(output, section);
+	}
+
+	/* close */
+	pclose(fp);
+
+	return output;
+}
+
 char *printAndReturnNull(char* str)
 {
 	printf("%s", str);
@@ -53,26 +81,21 @@ char *printAndReturnNull(char* str)
 
 char *clean_neopixel()
 {
+	// system("fastfetch");
+
 	char *neofetch_string;
-	char *ascii_start_str = "[1m";
-	char *ascii_end_str = "0m";
+	char *ascii_end_str = "[1G";
 
-	neofetch_string = scan_piped();
+	neofetch_string = readFastFetch();
 
-	char *ascii_start = strstr(neofetch_string, ascii_start_str);
-	char *ascii_end = strstr(ascii_start, ascii_end_str);
-
-	if (ascii_start == NULL)
-		return printAndReturnNull("ASCII Start is NULL\n");
+	char *ascii_end = strstr(neofetch_string, ascii_end_str);
+	char *ascii_start;
 
 	if (ascii_end == NULL)
 		return printAndReturnNull("ASCII End is NULL\n");
 
-	if (ascii_start > ascii_end)
-		return printAndReturnNull("Start > end for some reason\n");
-
-	ascii_start += 3;
-	ascii_end -= 2;
+	ascii_start = neofetch_string; 
+	ascii_end -= 4;
 
 	while (ascii_start != ascii_end)
 	{
@@ -94,11 +117,12 @@ int main() {
 	time_t last_time = start_time;
 	int fps;
 
+	init_sin_table();
+
 	srand(start_time);
 
 	char *neofetch_string = clean_neopixel();
-	
-	
+
 	printf("\n");
 
 	printf("%s\n", neofetch_string);
@@ -125,9 +149,9 @@ int main() {
 	APLight ap_light;
 	ap_light.point.x = 20;
 	ap_light.point.y = 10;
-	ap_light.color.r = 253;
-	ap_light.color.g = 200;
-	ap_light.color.b = 68;
+	ap_light.color.r = 219;
+	ap_light.color.g = 110;
+	ap_light.color.b = 179;
 	ap_light.strength = 20;
 
 

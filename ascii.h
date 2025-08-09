@@ -74,70 +74,9 @@ void freeAsciiBuffer(AsciiBuffer *buffer)
 	free(buffer);
 }
 
-void drawEllipseAttempt1(AsciiBuffer *buffer, Ellipse* ellipse)
+static inline int sameSign(float A, float B)
 {
-	// Calculating the intersection points on all the vertical and 
-	// horizontal lines that make up the grid
-	float *hIntersects = (float*) malloc(sizeof(float) * ( buffer->width + 1 ) *2);
-	float *hIntersectsCount = (float*) malloc(sizeof(char) * (buffer->width + 1));
-
-	float *vIntersects = (float*) malloc(sizeof(float) * ( buffer->height + 1 )*2);
-	float *vIntersectsCount = (float*) malloc(sizeof(char) * (buffer->height + 1));
-
-	PVLine line;
-	QResult q_result;
-
-	// Horizontal Lines
-	line.px = 0;
-	line.vx = 1;
-	line.vy = 0;
-	for (int i = 0; i < buffer->width+1; i++)
-	{
-		line.py = i;	
-		ellipseIntersection(ellipse, &line, &q_result);
-		hIntersectsCount[i] = q_result.count;
-
-		// If count < 2 then these will be random values
-		// but it does not matter because we will not check
-		hIntersects[i*2+0] = q_result.v1;
-		hIntersects[i*2+1] = q_result.v2;
-	}
-
-	// Vertical Lines
-	line.py = 0;
-	line.vx = 0;
-	line.vy = 1;
-	for (int i = 0; i < buffer->height+1; i++)
-	{
-		line.px = i;	
-		ellipseIntersection(ellipse, &line, &q_result);
-		vIntersectsCount[i] = q_result.count;
-
-		// If count < 2 then these will be random values
-		// but it does not matter because we will not check
-		vIntersects[i*2+0] = q_result.v1;
-		vIntersects[i*2+1] = q_result.v2;
-	}
-
-	for (int x = 0; x < buffer->width; x++) {
-		for (int y = 0; y < buffer->height; y++) {
-			// We need to check for the intersections of sides of the cell
-			// top/bottom/left/right. The character is dependent on 
-			// the sides in which the ellipse intersects 
-			// dealing with corner intersections will be annoying
-		
-			int intersect_count = 0;
-			
-			// for (int i = 0; i < )
-		}
-	}
-}
-
-
-
-int sameSign(float v1, float v2)
-{
-	return (v1*v2) > 0;
+	return (A*B) >= 0;
 }
 
 // returns the time of the closest point on the ellipse
@@ -146,7 +85,7 @@ float closestPointToEllipse(v2 point, Ellipse *ellipse, float tol)
 	float tol2 = tol*tol;
 
 	// Rotating point to match ellipse rotation
-	v2e r_point = convertV2ToV2e(ellipse, point);
+	v2e r_point = *convertV2ToV2e(ellipse, &point);
 
 	int above_ellipse   = r_point.y > 0;
 	int rightof_ellipse = r_point.x > 0;
@@ -193,9 +132,9 @@ float closestPointToEllipse(v2 point, Ellipse *ellipse, float tol)
 	}
 
 	// This is to prevent 0s from messing up things
-	const float POINT_SEARCH_EXPAND = 0.0;
-	t1 -= POINT_SEARCH_EXPAND;
-	t2 += POINT_SEARCH_EXPAND;
+	// const float POINT_SEARCH_EXPAND = 0.0;
+	// t1 -= POINT_SEARCH_EXPAND;
+	// t2 += POINT_SEARCH_EXPAND;
 
 	d1 = distanceDerivative(ellipse, &r_point, t1);
 	d2 = distanceDerivative(ellipse, &r_point, t2);
@@ -203,7 +142,7 @@ float closestPointToEllipse(v2 point, Ellipse *ellipse, float tol)
 	// They must have opposite signs otherwise the algorithm does not work
 	if (d1*d2 > 0)
 	{
-		// printf("Same sign failure %f %f\n", d1, d2);
+	// 	printf("Same sign failure %f %f\n", d1, d2);
 		return -1;
 	}
 
@@ -236,9 +175,9 @@ void drawEllipse(AsciiBuffer *buffer, Ellipse* ellipse, float width)
 			p.x = x + 0.5;
 			p.y = (y + 0.5) * 2;
 
-			v2e r_point_e = convertV2ToV2e(ellipse, p);
+			// v2e r_point_e = convertV2ToV2e(ellipse, p);
 
-			float point_time = closestPointToEllipse(p, ellipse, ellipse_tol);
+			float point_time = fmodf(closestPointToEllipse(cloneV2(&p), ellipse, ellipse_tol), M_PI*2);
 
 			if (point_time == -1)
 			{
@@ -261,51 +200,6 @@ void drawEllipse(AsciiBuffer *buffer, Ellipse* ellipse, float width)
 
 const char *ANGLE_ASCII = "|/'--'\\|";
 const int ANGLE_ASCII_COUNT = 8;
-
-void drawEllipseAttempt3(AsciiBuffer *buffer, Ellipse* ellipse, int res)
-{
-	float t = 0;
-	float step_size = PI * 2.0 / res;
-
-	int last_x = -1;
-	int last_y = -1;
-
-	for (int i = 0; i < res; i++)
-	{
-		// Getting the position
-		v2 point = getPointOnEllipse(ellipse, t);
-		int x = (int) (point.x + 0.5);
-		int y = (int) (point.y*0.5 + 0.5);
-
-		//printf("Check %i %i %i\n", i, x, y);
-
-		float rt = t;
-		t += step_size;
-
-		if ((last_x == x && last_y == y) 
-			|| x < 0 || x >= buffer->width
-			|| y < 0 || y >= buffer->height)
-			continue;
-
-		last_x = x;
-		last_y = y;
-
-		// Now we gotta pick the character
-		v2e d_point = getRelativePointOnEllipse(ellipse, rt+ PI * 0.5);
-		rotateVector2e(&d_point, ellipse->theta);
-
-		float angle = atan(d_point.y / d_point.x);
-		float a = (angle + PI * 0.5) / (PI);
-
-		char c = ANGLE_ASCII[(int) (a*ANGLE_ASCII_COUNT)];
-		
-
-		buffer->buffer[x + buffer->width * y] = c;
-
-		// printf("Added ascii\n");
-
-	}
-}
 
 void printAsciiBuffer(AsciiBuffer *buffer)
 {

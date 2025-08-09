@@ -78,7 +78,7 @@ void applyPointLight(ALBuffer *buffer, APLight *light)
 			float brightness = MAX(1.0 - (b * distance), 0);
 
 			C3 *color = &buffer->colors[x + buffer->width * y];
-			color->r += light->color.r * brightness;
+			color->r += (unsigned char)((float) light->color.r * brightness);
 			color->g += (unsigned char)((float) light->color.g * brightness);
 			color->b += (unsigned char)((float) light->color.b * brightness);
 		}

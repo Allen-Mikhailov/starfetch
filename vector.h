@@ -1,6 +1,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+#include "table_sin.h"
+
 #define MIN(a,b) (((a)<(b))?(a):(b))
 #define MAX(a,b) (((a)>(b))?(a):(b))
 
@@ -10,18 +12,32 @@ typedef struct Vector2 {
 	float y;
 } v2;
 
+static inline v2 cloneV2(v2 *p)
+{
+	v2 p2 = {p->x, p->y}; 
+	return p2;
+}
+
 float pointD2(v2 *p1, v2 *p2)
 {
 	return (p1->x - p2->x) * (p1->x - p2->x) 
 		+  (p1->y - p2->y) * (p1->y - p2->y);
 }
 
-void rotateVector2(v2 *v, float theta)
+static inline void rotateVector2(v2 *v, float theta)
+{
+	// printf("%f\n", theta);
+	theta = fmodf(theta + M_PI*2, M_PI*2);
+	float x = v->x;
+	v->x = x * t_cos(theta) - v->y * t_sin(theta);
+	v->y = x * t_sin(theta) + v->y * t_cos(theta);
+}
+
+static inline void rotateVector2O(v2 *v, float theta, float st, float ct)
 {
 	float x = v->x;
-	float y = v->y;
-	v->x = x * cos(theta) - y * sin(theta);
-	v->y = x * sin(theta) + y * cos(theta);
+	v->x = x * ct - v->y * st;
+	v->y = x * st + v->y * ct;
 }
 
 typedef struct QuadraticResult {

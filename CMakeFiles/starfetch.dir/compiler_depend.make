@@ -7,6 +7,7 @@ CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
   ascii_rain.h \
   ellipse.h \
   rect.h \
+  table_sin.h \
   vector.h \
   /usr/include/alloca.h \
   /usr/include/endian.h \
@@ -109,8 +110,6 @@ CMakeFiles/starfetch.dir/starfetch.c.o: starfetch.c \
 
 /usr/include/x86_64-linux-gnu/bits/types/cookie_io_functions_t.h:
 
-/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
-
 /usr/include/x86_64-linux-gnu/bits/floatn.h:
 
 /usr/include/x86_64-linux-gnu/bits/confname.h:
@@ -129,6 +128,8 @@ ascii_rain.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h:
 
+table_sin.h:
+
 /usr/include/features-time64.h:
 
 ellipse.h:
@@ -136,6 +137,10 @@ ellipse.h:
 /usr/include/x86_64-linux-gnu/sys/types.h:
 
 ascii.h:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls.h:
 
@@ -195,9 +200,7 @@ rect.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/FILE.h:
 
-/usr/include/x86_64-linux-gnu/bits/stdlib-float.h:
-
-/usr/include/stdc-predef.h:
+/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
 
 /usr/include/x86_64-linux-gnu/bits/uintn-identity.h:
 
@@ -212,6 +215,12 @@ rect.h:
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
 
 /usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
+
+/usr/include/x86_64-linux-gnu/bits/byteswap.h:
+
+/usr/include/x86_64-linux-gnu/bits/long-double.h:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
 
@@ -248,9 +257,3 @@ rect.h:
 /usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
-
-/usr/include/x86_64-linux-gnu/bits/byteswap.h:
-
-/usr/include/x86_64-linux-gnu/bits/long-double.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:

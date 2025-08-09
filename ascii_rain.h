@@ -52,7 +52,7 @@ void tickRain(ARState *state)
 			} else {
 				// On the side
 				drop->x = state->width - 1;
-				drop->y = (a - state->width_ratio) / (1-state->width_ratio) * state->width;
+				drop->y = (a - state->width_ratio) / (1-state->width_ratio) * state->height;
 			}
 		}
 	}
