@@ -1,3 +1,0 @@
-/home/allenm/Code/Projects/starfetch/CMakeFiles/starfetch.dir
-/home/allenm/Code/Projects/starfetch/CMakeFiles/edit_cache.dir
-/home/allenm/Code/Projects/starfetch/CMakeFiles/rebuild_cache.dir
